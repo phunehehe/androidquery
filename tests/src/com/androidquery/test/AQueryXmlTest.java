@@ -213,4 +213,12 @@ public class AQueryXmlTest extends AbstractTest<AQueryTestActivity> {
 		
 	}
 	
+	public void testXmlNoHeader() throws SAXException{
+		
+		InputStream is = this.getActivity().getResources().openRawResource(R.raw.xml_test_2);
+		xml = new XmlDom(is);
+	
+		assertNotNull(xml.tag("entry2"));
+	}
+	
 }
