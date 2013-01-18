@@ -28,7 +28,6 @@ import java.io.OutputStream;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPInputStream;
@@ -779,13 +779,18 @@ public abstract class AbstractAjaxCallback<T, K> implements Runnable{
 	}
 	
 	private String parseCharset(String tag){
+		
 		if(tag == null) return null;
 		int i = tag.indexOf("charset");
 		if(i == -1) return null;
 		
-		String charset = tag.substring(i + 7).replaceAll("[^\\w-]", "");
+		int e = tag.indexOf(";", i) ;
+		if(e == -1) e = tag.length();
+		
+		String charset = tag.substring(i + 7, e).replaceAll("[^\\w-]", "");
 		return charset;
 	}
+	
 	
 	private String correctEncoding(byte[] data, String target, AjaxStatus status){
 		
@@ -1132,6 +1137,7 @@ public abstract class AbstractAjaxCallback<T, K> implements Runnable{
 				result = getCacheFile();
 			}else{
 				File dir = AQUtility.getTempDir();
+				
 				if(dir == null) dir = cacheDir;
 				result = AQUtility.getCacheFile(dir, url);
 			}
@@ -1272,6 +1278,24 @@ public abstract class AbstractAjaxCallback<T, K> implements Runnable{
 		}
 		
 		fetchExe.execute(job);
+	}
+	
+	/**
+	 * Return the number of active ajax threads. Note that this doesn't necessarily correspond to active network connections.
+	 * Ajax threads might be reading a cached url from file system or transforming the response after a network transfer. 
+	 * 
+	 */
+	
+	public static int getActiveCount(){
+		
+		int result = 0;
+		
+		if(fetchExe instanceof ThreadPoolExecutor){
+			result = ((ThreadPoolExecutor) fetchExe).getActiveCount();
+		}
+		
+		return result;
+		
 	}
 	
 	/**
