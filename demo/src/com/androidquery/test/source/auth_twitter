@@ -2,7 +2,7 @@
 		
 		TwitterHandle handle = new TwitterHandle(this, CONSUMER_KEY, CONSUMER_SECRET);
 		
-		String url = "http://twitter.com/statuses/mentions.json";
+		String url = "https://api.twitter.com/1.1/statuses/mentions_timeline.json";
 		aq.auth(handle).progress(R.id.progress).ajax(url, JSONArray.class, this, "twitterCb");
 		
 		

@@ -2,7 +2,7 @@
 		
 		TwitterHandle handle = new TwitterHandle(this, CONSUMER_KEY, CONSUMER_SECRET);
 		
-		String url = "https://upload.twitter.com/1/statuses/update_with_media.json";
+		String url = "https://api.twitter.com/1.1/statuses/update_with_media.json";
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("status", "Testing Status Update with AndroidQuery");

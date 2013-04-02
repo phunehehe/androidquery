@@ -121,7 +121,7 @@ public class AjaxAuthActivity extends RunSourceActivity {
 		
 		TwitterHandle handle = new TwitterHandle(this, CONSUMER_KEY, CONSUMER_SECRET);
 		
-		String url = "http://twitter.com/statuses/mentions.json";
+		String url = "https://api.twitter.com/1.1/statuses/mentions_timeline.json";
 		aq.auth(handle).progress(R.id.progress).ajax(url, JSONArray.class, this, "twitterCb");
 		
 		
@@ -131,10 +131,7 @@ public class AjaxAuthActivity extends RunSourceActivity {
 		
 		TwitterHandle handle = new TwitterHandle(this, CONSUMER_KEY, CONSUMER_SECRET);
 		
-		//1/statuses/update.format
-		//https://upload.twitter.com/1/statuses/update_with_media.format
-
-		String url = "http://twitter.com/statuses/update.json";
+		String url = "https://api.twitter.com/1.1/statuses/update.json";
 		
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("status", "Testing 123");
@@ -157,7 +154,7 @@ public class AjaxAuthActivity extends RunSourceActivity {
 		
 		TwitterHandle handle = new TwitterHandle(this, CONSUMER_KEY, CONSUMER_SECRET);
 		
-		String url = "https://upload.twitter.com/1/statuses/update_with_media.json";
+		String url = "https://api.twitter.com/1.1/statuses/update_with_media.json";
 		
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("status", "Testing Status Update with AndroidQuery");
