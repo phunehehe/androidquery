@@ -2135,6 +2135,31 @@ public abstract class AbstractAQuery<T extends AbstractAQuery<T>> implements Con
 	}
 	
 	/**
+	 * Return file cached by ajax or image requests. Returns null if url is not cached or is expired.
+	 *
+	 * @param url 
+	 * @param expire
+	 * @return File
+	 */
+	
+	public File getCachedFile(String url, long expire){
+		
+		if(expire < 0) return null;
+		
+		File file = getCachedFile(url);
+		
+		if(file != null && expire != 0){
+			long diff = System.currentTimeMillis() - file.lastModified();	
+			if(diff > expire){
+				return null;
+			}
+		}
+		
+		return file;
+	}
+	
+	
+	/**
 	 * Delete any cached file for the url.
 	 *
 	 * @param url 
