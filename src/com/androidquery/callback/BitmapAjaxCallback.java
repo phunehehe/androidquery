@@ -78,9 +78,9 @@ public class BitmapAjaxCallback extends AbstractAjaxCallback<Bitmap, BitmapAjaxC
 	
 	private static HashMap<String, WeakHashMap<ImageView, BitmapAjaxCallback>> queueMap = new HashMap<String, WeakHashMap<ImageView, BitmapAjaxCallback>>();	
 	
-	private WeakReference<ImageView> v;
-	private int targetWidth;
-	private int fallback;
+	protected WeakReference<ImageView> v;
+	protected int targetWidth;
+	protected int fallback;
 	private File imageFile;
 	private Bitmap bm;
 	private int animation;
@@ -413,7 +413,7 @@ public class BitmapAjaxCallback extends AbstractAjaxCallback<Bitmap, BitmapAjaxC
 
 
 	
-	private Bitmap getFallback(){
+	protected Bitmap getFallback(){
 		
 		Bitmap bm = null;
 		
