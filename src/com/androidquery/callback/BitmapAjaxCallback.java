@@ -647,17 +647,18 @@ public class BitmapAjaxCallback extends AbstractAjaxCallback<Bitmap, BitmapAjaxC
 		
 		url = getKey(url, targetWidth, round);
 		
+		Bitmap result = null;
 		Map<String, Bitmap> cache = getBCache();
-		Bitmap result = cache.get(url);
+		result = getBitmapFrom(cache, url);
 		
 		if(result == null){
 			cache = getSCache();
-			result = cache.get(url);
+			result = getBitmapFrom(cache, url);
 		}
 		
 		if(result == null){
 			cache = getICache();
-			result = cache.get(url);
+			result = getBitmapFrom(cache, url);
 			
 			if(result != null){
 				
@@ -670,6 +671,18 @@ public class BitmapAjaxCallback extends AbstractAjaxCallback<Bitmap, BitmapAjaxC
 		}
 		
 		return result;
+	}
+	
+	private static Bitmap getBitmapFrom(Map<String, Bitmap> cache, String url) {
+	    Bitmap result = null;
+	    
+	    if (cache != null) {
+	        synchronized (cache) {
+	            result = cache.get(url);
+	        }
+	    }
+	    
+	    return result;
 	}
 	
 	private static String getKey(String url, int targetWidth, int round){
