@@ -584,9 +584,9 @@ public class BitmapAjaxCallback extends AbstractAjaxCallback<Bitmap, BitmapAjaxC
 	 * Clear the bitmap memcache.
 	 */
 	public static void clearCache(){
-		bigCache = null;
-		smallCache = null;
-		invalidCache = null;
+	    clearCache(bigCache);
+	    clearCache(smallCache);
+	    clearCache(invalidCache);
 	}
 	
 	protected static void clearTasks(){
@@ -683,6 +683,14 @@ public class BitmapAjaxCallback extends AbstractAjaxCallback<Bitmap, BitmapAjaxC
 	    }
 	    
 	    return result;
+	}
+	
+	private static void clearCache(Map<String, Bitmap> cache) {
+	    if (cache != null) {
+	        synchronized (cache) {
+	            cache = null;
+	        }
+	    }
 	}
 	
 	private static String getKey(String url, int targetWidth, int round){
