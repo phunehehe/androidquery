@@ -275,6 +275,9 @@ public class Common implements Comparator<File>, Runnable, OnClickListener, OnLo
 			int last = lv.getLastVisiblePosition();
 			
 			int count = last - first;
+			if (count == 0) {
+			    return;
+			}
 			
 			ListAdapter la = lv.getAdapter();
 			
