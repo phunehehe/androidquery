@@ -1091,6 +1091,12 @@ public abstract class AbstractAjaxCallback<T, K> implements Runnable{
 		}catch(Exception e){
 			AQUtility.debug(e);
 			status.code(AjaxStatus.NETWORK_ERROR).message("network error");
+			
+			// delete cached file of this url then later we will not load bitmap from a corrupted file
+			File file = accessFile(cacheDir, getCacheUrl());
+			if (file != null) {
+			    file.delete();
+			}
 		}
 		
 		
