@@ -1420,7 +1420,7 @@ public abstract class AbstractAjaxCallback<T, K> implements Runnable{
 	
 	
 	private static DefaultHttpClient client;
-	public static DefaultHttpClient getClient(){
+	private static DefaultHttpClient getClient(){
 		
 		if(client == null || !REUSE_CLIENT){
 		
@@ -1450,6 +1450,12 @@ public abstract class AbstractAjaxCallback<T, K> implements Runnable{
 		return client;
 	}
 	
+	/**
+	 * This method will be used to close the connection when we're done with network stuffs
+	 */
+	public static void shutDownConnection() {
+	    getClient().getConnectionManager().shutdown();
+	}
 	
 	private void httpDo(HttpUriRequest hr, String url, Map<String, String> headers, AjaxStatus status) throws ClientProtocolException, IOException{
 		
