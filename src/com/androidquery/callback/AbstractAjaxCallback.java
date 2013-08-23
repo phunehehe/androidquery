@@ -1420,7 +1420,7 @@ public abstract class AbstractAjaxCallback<T, K> implements Runnable{
 	
 	
 	private static DefaultHttpClient client;
-	private static DefaultHttpClient getClient(){
+	public static DefaultHttpClient getClient(){
 		
 		if(client == null || !REUSE_CLIENT){
 		
@@ -1445,7 +1445,6 @@ public abstract class AbstractAjaxCallback<T, K> implements Runnable{
 			
 			ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(httpParams, registry);			
 			client = new DefaultHttpClient(cm, httpParams);
-			
 			
 		}
 		return client;
