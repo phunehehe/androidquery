@@ -1446,11 +1446,16 @@ public abstract class AbstractAjaxCallback<T, K> implements Runnable{
 			ThreadSafeClientConnManager cm = new ThreadSafeClientConnManager(httpParams, registry);			
 			client = new DefaultHttpClient(cm, httpParams);
 			
-			
 		}
 		return client;
 	}
 	
+	/**
+	 * This method will be used to close the connection when we're done with network stuffs
+	 */
+	public static void shutDownConnection() {
+	    getClient().getConnectionManager().shutdown();
+	}
 	
 	private void httpDo(HttpUriRequest hr, String url, Map<String, String> headers, AjaxStatus status) throws ClientProtocolException, IOException{
 		
